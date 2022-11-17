@@ -1,0 +1,6 @@
+{
+    "sketch": "main.ino",
+    "board": "arduino:avr:leonardorb",
+    "port": "COM6",
+    "output": "build"
+}

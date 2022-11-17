@@ -1,0 +1,250 @@
+﻿<Window x:Class="Streamdeck.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Streamdeck.Views"
+        xmlns:Behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        x:Name="MainWindowView"
+        IsEnabled="{Binding UIEnabled}" 
+        Title="ExtenDeck" Height="450" Width="700" ResizeMode="CanMinimize">
+    <Window.Resources>
+        <x:Array x:Key="keys" Type="{x:Type models:KeyCodePair}" 
+            xmlns:models="clr-namespace:Streamdeck.Models">
+            <models:KeyCodePair Key="F1" Code="194"/>
+            <models:KeyCodePair Key="F2" Code="195"/>
+            <models:KeyCodePair Key="F3" Code="196"/>
+            <models:KeyCodePair Key="F4" Code="197"/>
+            <models:KeyCodePair Key="F5" Code="198"/>
+            <models:KeyCodePair Key="F6" Code="199"/>
+            <models:KeyCodePair Key="F7" Code="200"/>
+            <models:KeyCodePair Key="F8" Code="201"/>
+            <models:KeyCodePair Key="F9" Code="202"/>
+            <models:KeyCodePair Key="F10" Code="203"/>
+            <models:KeyCodePair Key="F11" Code="204"/>
+            <models:KeyCodePair Key="F12" Code="205"/>
+            <models:KeyCodePair Key="F13" Code="240"/>
+            <models:KeyCodePair Key="F14" Code="241"/>
+            <models:KeyCodePair Key="F15" Code="242"/>
+            <models:KeyCodePair Key="F16" Code="243"/>
+            <models:KeyCodePair Key="F17" Code="244"/>
+            <models:KeyCodePair Key="F18" Code="245"/>
+            <models:KeyCodePair Key="F19" Code="246"/>
+            <models:KeyCodePair Key="F20" Code="247"/>
+            <models:KeyCodePair Key="F21" Code="248"/>
+            <models:KeyCodePair Key="F22" Code="249"/>
+            <models:KeyCodePair Key="F23" Code="250"/>
+            <models:KeyCodePair Key="F24" Code="251"/>
+
+            <models:KeyCodePair Key="0" Code="48"/>
+            <models:KeyCodePair Key="1" Code="49"/>
+            <models:KeyCodePair Key="2" Code="50"/>
+            <models:KeyCodePair Key="3" Code="51"/>
+            <models:KeyCodePair Key="4" Code="52"/>
+            <models:KeyCodePair Key="5" Code="53"/>
+            <models:KeyCodePair Key="6" Code="54"/>
+            <models:KeyCodePair Key="7" Code="55"/>
+            <models:KeyCodePair Key="8" Code="56"/>
+            <models:KeyCodePair Key="9" Code="57"/>
+
+            <models:KeyCodePair Key="A" Code="97"/>
+            <models:KeyCodePair Key="B" Code="98"/>
+            <models:KeyCodePair Key="C" Code="99"/>
+            <models:KeyCodePair Key="D" Code="100"/>
+            <models:KeyCodePair Key="E" Code="101"/>
+            <models:KeyCodePair Key="F" Code="102"/>
+            <models:KeyCodePair Key="G" Code="103"/>
+            <models:KeyCodePair Key="H" Code="104"/>
+            <models:KeyCodePair Key="I" Code="105"/>
+            <models:KeyCodePair Key="J" Code="106"/>
+            <models:KeyCodePair Key="K" Code="107"/>
+            <models:KeyCodePair Key="L" Code="108"/>
+            <models:KeyCodePair Key="M" Code="109"/>
+            <models:KeyCodePair Key="N" Code="110"/>
+            <models:KeyCodePair Key="O" Code="111"/>
+            <models:KeyCodePair Key="P" Code="112"/>
+            <models:KeyCodePair Key="Q" Code="113"/>
+            <models:KeyCodePair Key="R" Code="114"/>
+            <models:KeyCodePair Key="S" Code="115"/>
+            <models:KeyCodePair Key="T" Code="116"/>
+            <models:KeyCodePair Key="U" Code="117"/>
+            <models:KeyCodePair Key="V" Code="118"/>
+            <models:KeyCodePair Key="W" Code="119"/>
+            <models:KeyCodePair Key="X" Code="120"/>
+            <models:KeyCodePair Key="Y" Code="121"/>
+            <models:KeyCodePair Key="Z" Code="122"/>
+        </x:Array>
+        <x:Array x:Key="modKeys" Type="{x:Type models:KeyCodePair}" 
+            xmlns:models="clr-namespace:Streamdeck.Models">
+            <models:KeyCodePair Key="" Code="0"/>
+            <models:KeyCodePair Key="Left Ctrl" Code="128"/>
+            <models:KeyCodePair Key="Left Windows" Code="131"/>
+            <models:KeyCodePair Key="Left Alt" Code="130"/>
+            <models:KeyCodePair Key="Left Shift" Code="129"/>
+        </x:Array>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="65"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Height="25" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ComboBox ItemsSource="{Binding SerialPorts}"
+                      SelectedItem="{Binding SelectedSerialPort}"
+                      Width="75" />
+            <Button Width="30" FontSize="15" Content="⟳">
+                <Behaviors:Interaction.Triggers>
+                    <Behaviors:EventTrigger EventName="Click">
+                        <Behaviors:CallMethodAction TargetObject="{Binding}" MethodName="RefreshSerialPorts"/>
+                    </Behaviors:EventTrigger>
+                </Behaviors:Interaction.Triggers>
+            </Button>
+        </StackPanel>
+        <TextBlock Grid.Row="0"
+                   Grid.Column="1"
+                   VerticalAlignment="Center"
+                   Text="{Binding ConfigurationUpdateStatus}"
+                   HorizontalAlignment="Center"
+                   TextWrapping="Wrap"
+                   Foreground="#000000"
+                   FontSize="15"/>
+        <Grid Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="220">
+            <Grid Margin="0" Background="#FFF76F0F" Width="120">
+                <StackPanel Orientation="Vertical" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                    <TextBlock Text="Modifier"/>
+                    <ComboBox ItemsSource="{StaticResource modKeys}" SelectedValue="{Binding SelectedKey.ModKey.Key}" SelectedValuePath="Key" DisplayMemberPath="Key">
+                        <Behaviors:Interaction.Triggers>
+                            <Behaviors:EventTrigger EventName="SelectionChanged">
+                                <Behaviors:CallMethodAction TargetObject="{Binding ElementName=MainWindowView, Path=DataContext, Mode=OneWay}" MethodName="SelectMod"/>
+                            </Behaviors:EventTrigger>
+                        </Behaviors:Interaction.Triggers>
+                    </ComboBox>
+                    <TextBlock Text="Modifier 2" Margin="0 15 0 0"/>
+                    <ComboBox ItemsSource="{StaticResource modKeys}" SelectedValue="{Binding SelectedKey.ModKey2.Key}" SelectedValuePath="Key" DisplayMemberPath="Key">
+                        <Behaviors:Interaction.Triggers>
+                            <Behaviors:EventTrigger EventName="SelectionChanged">
+                                <Behaviors:CallMethodAction TargetObject="{Binding ElementName=MainWindowView, Path=DataContext, Mode=OneWay}" MethodName="SelectMod2"/>
+                            </Behaviors:EventTrigger>
+                        </Behaviors:Interaction.Triggers>
+                    </ComboBox>
+                    <TextBlock Text="Key" Margin="0 15 0 0"/>
+                    <ComboBox ItemsSource="{StaticResource keys}" SelectedValue="{Binding SelectedKey.MainKey.Key}" SelectedValuePath="Key" DisplayMemberPath="Key">
+                        <Behaviors:Interaction.Triggers>
+                            <Behaviors:EventTrigger EventName="SelectionChanged">
+                                <Behaviors:CallMethodAction TargetObject="{Binding ElementName=MainWindowView, Path=DataContext, Mode=OneWay}" MethodName="SelectKey"/>
+                            </Behaviors:EventTrigger>
+                        </Behaviors:Interaction.Triggers>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <ListView ItemsSource="{Binding Keys}"
+                      SelectedItem="{Binding SelectedKey}"
+                      BorderThickness="0"
+                      SelectionMode="Single"
+                      HorizontalAlignment="Center" VerticalAlignment="Center"
+                      HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                <ListView.Resources>
+                    <Style x:Key="FocusVisual">
+                        <Setter Property="Control.Template">
+                            <Setter.Value>
+                                <ControlTemplate>
+                                    <Rectangle Margin="0" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                    <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#FFDF620B"/>
+                    <SolidColorBrush x:Key="Item.MouseOver.Border" Color="Transparent"/>
+                    <SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="#FFAF4B06"/>
+                    <SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="Transparent"/>
+                    <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#FFAF4B06"/>
+                    <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="Transparent"/>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="SnapsToDevicePixels" Value="True"/>
+                        <Setter Property="Margin" Value="1"/>
+                        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                        <Setter Property="Background" Value="#FFF76F0F"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsMouseOver" Value="True"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}"/>
+                                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}"/>
+                                        </MultiTrigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                                <Condition Property="IsSelected" Value="True"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Background}"/>
+                                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Border}"/>
+                                        </MultiTrigger>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                                                <Condition Property="IsSelected" Value="True"/>
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}"/>
+                                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Border}"/>
+                                        </MultiTrigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.Resources>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="70" Height="70" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <StackPanel Orientation="Vertical" Margin="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                <TextBlock Text="{Binding ModKey.Key}"/>
+                                <TextBlock Text="{Binding ModKey2.Key}"/>
+                                <TextBlock Text="{Binding MainKey.Key}"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2">
+            <Button HorizontalAlignment="Stretch"
+                    VerticalAlignment="Bottom"
+                    Height="40"
+                    FontSize="15"
+                    Content="Save configuration">
+                <Behaviors:Interaction.Triggers>
+                    <Behaviors:EventTrigger EventName="Click">
+                        <Behaviors:CallMethodAction TargetObject="{Binding}" MethodName="SaveKeys"/>
+                    </Behaviors:EventTrigger>
+                </Behaviors:Interaction.Triggers>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
